@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+ <title>
+    Simple Calculator
+ </title>
+ <body>
+   <div>
+    <div id="answer">
+      <input>
+      </input>
+    </div>
+    <div>
+       <div>
+         <button onclick="updateOps(7)">7</button>
+         <button onclick="updateOps(8)">8</button>
+         <button onclick="updateOps(9)">9</button>
+         <button onclick="updateOps('divide')">:</button>
+       </div>
+       <div>
+         <button onclick="updateOps(4)">4</button>
+         <button onclick="updateOps(5)">5</button>
+         <button onclick="updateOps(6)">6</button>
+         <button onclick="updateOps('multiplication')">*</button>
+       </div>
+       <div>
+         <button onclick="updateOps(1)">1</button>
+         <button onclick="updateOps(2)">2</button>
+         <button onclick="updateOps(3)">3</button>
+         <button onclick="updateOps('difference')">-</button>
+       </div>
+       <div>
+         <button onclick="updateOps(0)">0</button>
+         <button onclick="updateOps('.')">.</button>
+         <button onclick="viewAnswer()">=</button>
+         <button onclick="updateOps('plus')">+</button>
+       </div>
+    </div>
+   </div>
+   <script>
+    // input
+     // input objects to update
+      var ops = {
+        operatorVar : "",
+        leftVar : null,
+        rightVar : null
+      }
+    var operator = ops.operatorVar;
+    var leftOperand = ops.leftVar;
+    var rightOperand = ops.rightVar;
+    // end of inputs
+
+    // functions to handle inputs and assign appropriate values to input objects
+    // 1. any time a key is clicked on each value of ops have to be updated
+    function updateOps (key) {
+     // step1. create an object with the following properties
+       // array : allValues(to hold all pressed values)
+      //  array : leftArray(to hold all pressed values left to the operator)
+      // array : numbers only left array(to hold all left values but only numbers)
+      // string : numberLeft(to hold left value as a string)
+       // array : rightArray(to hold all pressed values right to the operator)
+       // string : operatorValue
+       // number : leftValue(to hold the value from leftArray)
+       // number : rightValue(to hold the value from rightArray)
+     // step2. write functions to find and assign the values of all propertien in ops
+     // step3. assign values to ops properties
+     // step1. create an object with the following properties
+     var fakeOps = {
+       allValues : [],
+       leftArray : [],
+       numberOnlyLeftArray : [],
+       numberLeft : "",
+       rightArray : [],
+       numberOnlyRightArray : [],
+       numberRight : "",
+       operatorValue : "",
+       leftValue : null,
+       rightValue : null
+     };
+     // step2. write functions to find and assign the values of all propertien in ops
+       // allValues
+      fakeOps.allValues.push(key);
+       // leftArray and rightArray
+       for (var i = allValues.length-1; i >= 0 ; i--) {
+           if (allValues[i] === 'multiplication' || allValues[i] === 'divide' || allValues[i] === 'minus' || allValues[i] === 'plus') {
+                 for (var a = 0; a < i; a++) {
+                   fakeOps.leftArray.push(allValues[a]);
+                 }
+                 for (var b = allValues.length; b > i; b--) {
+                   fakeOps.rightArray.push(allValues[b]);
+                 }
+           }
+       }
+       // operatorValue
+       for (var i = allValues.length; i >= 0 ; i--) {
+         // find left operand
+           if (allValues[i] === 'multiplication' || allValues[i] === 'divide' || allValues[i] === 'minus' || allValues[i] === 'plus') {
+                fakeOps.operatorValue = allValues[i];
+           }
+       }
+       // leftValue
+       for (var i = 0; i < leftArray.length; i++) {
+         if (leftArray[i] === 0 || leftArray[i] === 1 || leftArray[i] === 2 || leftArray[i] === 3 || leftArray[i] === 4 || leftArray[i] === 5 || leftArray[i] === 6 || leftArray[i] === 7 || leftArray[i] === 8 || leftArray[i] === 9 || leftArray[i] === '.') {
+           fakeOps.numberOnlyLeftArray.push(leftArray[i]);
+         }
+       }
+       for (var i = 0; i < numberOnlyLeftArray.length; i++) {
+         var leftString = toString(numberOnlyLeftArray[i]);
+         fakeOps.numberLeft = numberLeft + leftString;
+       }
+       fakeOps.leftValue = Number(numberLeft);
+
+       // rightValue
+       for (var i = 0; i < rightArray.length; i++) {
+         if (rightArray[i] === 0 || rightArray[i] === 1 || rightArray[i] === 2 || rightArray[i] === 3 || rightArray[i] === 4 || rightArray[i] === 5 || rightArray[i] === 6 || rightArray[i] === 7 || rightArray[i] === 8 || rightArray[i] === 9 || rightArray[i] === '.') {
+           fakeOps.numberOnlyRightArray.push(rightArray[i]);
+         }
+       }
+       for (var i = 0; i < numberOnlyRightArray.length; i++) {
+         var rightString = toString(numberOnlyRightArray[i]);
+         fakeOps.numberRight = numberRight + rightString;
+       }
+       fakeOps.rightValue = Number(numberRight);
+
+       ops.operatorVar = fakeOps.operatorValue;
+       ops.leftVar = fakeOps.leftValue;
+       ops.rightVar = fakeOps.rightValue;
+    }
+
+
+    //calculate
+    function operate(o, l, r) {
+      var left = l;
+      var right = r;
+      var operator = o;
+      // calculate
+       if (operator === "plus") {
+         var sum = left + right;
+         return sum;
+       }
+       else if (operator === "minus") {
+         var difference = left - right;
+         return difference;
+       }
+       else if (operator === "multiplication") {
+         var multiply = left * right;
+         return multiply;
+       }
+       else if (operator === "divide") {
+         var divide = left / right;
+         return divide;
+       }
+       else if (operator === "" || right === null || left === null) {
+         alert("please fill in correctly!");
+       }
+       else {
+         return -1;
+       }
+    }
+    //output
+    function viewAnswer() {
+      // passing matching inputs to operate function.
+      var answer = operate(operator, leftOperand, rightOperand);
+      alert(answer);
+    }
+   </script>
+ </body>
+</html>
